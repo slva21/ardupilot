@@ -40,6 +40,7 @@ public:
         AUTOROTATE =   26,  // Autonomous autorotation
         AUTO_RTL =     27,  // Auto RTL, this is not a true mode, AUTO will report as this mode if entered to perform a DO_LAND_START Landing sequence
         TURTLE =       28,  // Flip over after crash
+        TEST=          99
 
         // Mode number 127 reserved for the "drone show mode" in the Skybrush
         // fork at https://github.com/skybrush-io/ardupilot
@@ -1851,6 +1852,19 @@ private:
     int16_t line_num = 0;           // target line number
     bool is_suspended;              // true if zigzag auto is suspended
 };
+
+
+class ModeTest : public Mode {
+
+public:
+    ModeTest(void);
+
+    bool init(bool ignore_checks) override;
+    void run() override;
+
+    Number mode_number() const override { return Number::TEST; }   
+
+}
 
 #if MODE_AUTOROTATE_ENABLED == ENABLED
 class ModeAutorotate : public Mode {
